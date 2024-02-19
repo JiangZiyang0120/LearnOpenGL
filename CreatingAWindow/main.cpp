@@ -4,6 +4,7 @@ int main(void) {
     GLFWwindow *window;
 
     /* Initialize the library */
+    /* you can't use functions of glew until you successfully call glfwInit() */
     if (!glfwInit())
         return -1;
 
