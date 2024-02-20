@@ -9,7 +9,7 @@
 
 // get the path relative to work path
 static std::string getPath(const std::string &str) {
-    static const std::string currentFilepath = "../";
+    static const std::string currentFilepath = "../../";
     return currentFilepath + str;
 }
 
@@ -182,7 +182,7 @@ int main(void) {
         glfwPollEvents();
     }
 
-    glDeleteShader(shader);
+    glDeleteProgram(shader);
 
     return 0;
 }
