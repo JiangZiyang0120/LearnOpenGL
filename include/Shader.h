@@ -8,7 +8,7 @@
 #include <string>
 #include <eigen3/Eigen/Core>
 #include <GL/glew.h>
-
+#include <unordered_map>
 
 class Shader {
 public:
@@ -27,6 +27,8 @@ private:
     GLuint m_RenderID;
 
     std::string m_VertexShaderPath, m_FragmentShaderPath;
+
+    std::unordered_map<std::string, GLuint> m_UniformLocationCaches;
 
     GLuint getUniformLocation(const std::string &name);
 

@@ -36,7 +36,13 @@ void Shader::setUniform4f(const std::string &name, Eigen::Vector4f value) {
 }
 
 GLuint Shader::getUniformLocation(const std::string &name) {
-    return glGetUniformLocation(m_RenderID, name.c_str());
+    auto iter = m_UniformLocationCaches.find(name);
+    if (iter != m_UniformLocationCaches.end())
+        return iter->second;
+    GLuint location = glGetUniformLocation(m_RenderID, name.c_str());
+    ASSERT(location == -1);
+    m_UniformLocationCaches[name] = location;
+    return location;
 }
 
 GLuint Shader::compileShader(GLenum type, const std::string &source) {

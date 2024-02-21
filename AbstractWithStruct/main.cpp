@@ -67,7 +67,7 @@ int main(void) {
     VAO.unbind();
     VBO.unbind();
     IBO.unbind();
-    GLCall(glUseProgram(0));
+    shader.unbind();
 
     // generate a carton
     GLfloat r = 0.5f;
