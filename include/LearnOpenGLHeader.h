@@ -13,7 +13,7 @@
                   x;              \
                   GLCheckError(x)
 
-#define ASSERT(x) if(x){ showMessage(__FILE__, __LINE__); abort(); }
+#define ASSERT(x) if(x) showMessage(__FILE__, __LINE__), abort()
 
 void showMessage(const char *file, int line);
 

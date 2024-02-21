@@ -84,9 +84,16 @@ int main(void) {
             2, 3, 0, //second triangle
     };
 
-    GLuint vertexBuffer;
-    glGenBuffers(1, &vertexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    /*
+     * A VAO contains a buffer bind to GL_ARRAY_BUFFER and its layout (which we indicate in glVertexAttribPointer)
+     */
+    GLuint VAO;
+    GLCall(glGenVertexArrays(1, &VAO));
+    GLCall(glBindVertexArray(VAO));
+    
+    GLuint VBO;
+    glGenBuffers(1, &VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
     glBufferData(GL_ARRAY_BUFFER, sizeof(quadrangle), quadrangle, GL_STATIC_DRAW);
     GLuint IBO; // index buffer object
@@ -94,7 +101,8 @@ int main(void) {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-
+    // bind VBO to VAO
+    // index 0 of the first parameter link to ABO, and bind it with VAO
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0);
     glEnableVertexAttribArray(0);
 
@@ -109,15 +117,26 @@ int main(void) {
     // set the data of u_Color
     GLCall(glUniform4f(location, 0.2f, 0.3f, 0.8f, 1.0f));
 
-    // generate a carton
+    // unbind
+    GLCall(glBindVertexArray(0));
+    GLCall(glUseProgram(0));
+    GLCall(glBindBuffer(GL_ARRAY_BUFFER,0));
+    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
 
+    // generate a carton
     GLfloat r = 0.5f;
     GLfloat increment = 0.03f;
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
 
         // sent color
+        // uniform is per draw
+        GLCall(glUseProgram(shader));
         GLCall(glUniform4f(location, r, 0.3f, 0.8f, 1.0f));
+
+        GLCall(glBindVertexArray(VAO));
+        GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO));
+
         GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
 
         // change the color
