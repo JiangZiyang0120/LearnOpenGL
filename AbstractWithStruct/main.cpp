@@ -5,49 +5,7 @@
 #include <Core.h>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <string>
-#include <iostream>
 
-GLuint compileShader(GLenum type, const std::string &source) {
-    GLuint id = glCreateShader(type);
-    const char *src = source.c_str();
-    glShaderSource(id, 1, &src, nullptr);
-    glCompileShader(id);
-
-    // check for error
-    GLint result;
-    glGetShaderiv(id, GL_COMPILE_STATUS, &result);
-    if (result == GL_FALSE) {
-        int length;
-        glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
-        char message[length];
-        glGetShaderInfoLog(id, length, &length, message);
-        std::cerr << ((type == GL_VERTEX_SHADER) ? "VERTEX" : "FRAGMENT") << " SHADER ERROR: \n" << message
-                  << std::endl;
-        glDeleteShader(id);
-        return 0;
-    }
-
-    return id;
-}
-
-// compile and test shader
-static GLuint createShader(const std::string &vertexShader, const std::string &fragmentShader) {
-    GLuint program = glCreateProgram();
-    GLuint vs = compileShader(GL_VERTEX_SHADER, vertexShader),
-            fs = compileShader(GL_FRAGMENT_SHADER, fragmentShader);
-
-    glAttachShader(program, vs);
-    glAttachShader(program, fs);
-    glLinkProgram(program);
-    glValidateProgram(program);
-
-    // Usually we don't need to do that
-    glDeleteShader(vs);
-    glDeleteShader(fs);
-
-    return program;
-}
 
 int main(void) {
     GLFWwindow *window;
@@ -99,16 +57,11 @@ int main(void) {
     VBLayout.push<GLfloat>(2);
     VAO.setLayout(VBO, VBLayout);
 
-    GLuint shader = createShader(getShader("VertexShader.glsl"),
-                                 getShader("uniformFS.glsl"));
-    GLCall(glUseProgram(shader));
+    Shader shader("../../Shader/VertexShader.glsl",
+                  "../../Shader/uniformFS.glsl");
+    shader.bind();
 
-    // index for vec4 u_Color in "uniformFS.glsl"
-    GLCall(GLint location = glGetUniformLocation(shader, "u_Color"));
-    // check if u_Color is found
-    ASSERT(location == -1);
-    // set the data of u_Color
-    GLCall(glUniform4f(location, 0.2f, 0.3f, 0.8f, 1.0f));
+    shader.setUniform4f("u_Color", Eigen::Vector4f(0.2f, 0.3f, 0.8f, 1.0f));
 
     // unbind
     VAO.unbind();
@@ -124,8 +77,8 @@ int main(void) {
 
         // sent color
         // uniform is per draw
-        GLCall(glUseProgram(shader));
-        GLCall(glUniform4f(location, r, 0.3f, 0.8f, 1.0f));
+        shader.bind();
+        shader.setUniform4f("u_Color", Eigen::Vector4f(r, 0.3f, 0.8f, 1.0f));
 
         VAO.bind();
         IBO.bind();
@@ -146,8 +99,6 @@ int main(void) {
         /* Poll for and process events */
         glfwPollEvents();
     }
-
-    glDeleteProgram(shader);
 
     return 0;
 }

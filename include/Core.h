@@ -10,5 +10,6 @@
 #include <IndexBuffer.h>
 #include <VertexBufferLayout.h>
 #include <VertexArray.h>
+#include <Shader.h>
 
 #endif //UNIFORM_CORE_H

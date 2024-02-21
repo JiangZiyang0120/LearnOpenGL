@@ -21,18 +21,3 @@ void GLCheckErrorWithLine(const char *file, const char *function, int line) {
                   << std::endl;
     }
 }
-
-std::string getPath(const std::string &str) {
-    return currentFilepath + str;
-}
-
-std::string getShader(const std::string &&filePath) {
-    std::ifstream file(getPath(filePath));
-    if (file.is_open()) {
-        std::string content((std::istreambuf_iterator<char>(file)),
-                            (std::istreambuf_iterator<char>()));
-        return content;
-    } else {
-        return "Error Occurred";
-    }
-}

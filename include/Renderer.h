@@ -25,8 +25,4 @@ void GLCheckErrorWithLine(const char *file, const char *function, int line);
 
 static const std::string currentFilepath = "../../Shader/";
 
-std::string getPath(const std::string &str);
-
-std::string getShader(const std::string &&filePath);
-
 #endif //UNIFORM_RENDERER_H
