@@ -2,8 +2,10 @@
 // Created by jasperyang on 24-2-21.
 //
 
-#ifndef UNIFORM_LEARNOPENGLHEADER_H
-#define UNIFORM_LEARNOPENGLHEADER_H
+#ifndef UNIFORM_RENDERER_H
+#define UNIFORM_RENDERER_H
+
+#include <GL/glew.h>
 
 #include <string>
 
@@ -27,4 +29,4 @@ std::string getPath(const std::string &str);
 
 std::string getShader(const std::string &&filePath);
 
-#endif //UNIFORM_LEARNOPENGLHEADER_H
+#endif //UNIFORM_RENDERER_H

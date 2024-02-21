@@ -1,8 +1,12 @@
+//
+// Created by jasperyang on 24-2-21.
+//
+
+#include <Core.h>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <string>
 #include <iostream>
-#include <Renderer.h>
 
 GLuint compileShader(GLenum type, const std::string &source) {
     GLuint id = glCreateShader(type);
@@ -90,21 +94,15 @@ int main(void) {
     GLuint VAO;
     GLCall(glGenVertexArrays(1, &VAO));
     GLCall(glBindVertexArray(VAO));
-    
-    GLuint VBO;
-    glGenBuffers(1, &VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
-    glBufferData(GL_ARRAY_BUFFER, sizeof(quadrangle), quadrangle, GL_STATIC_DRAW);
-    GLuint IBO; // index buffer object
-    glGenBuffers(1, &IBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    VertexBuffer VBO(quadrangle, sizeof(quadrangle));
 
     // bind VBO to VAO
     // index 0 of the first parameter link to ABO, and bind it with VAO
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0);
     glEnableVertexAttribArray(0);
+
+    IndexBuffer IBO(indices, 6);
 
     GLuint shader = createShader(getShader("VertexShader.glsl"),
                                  getShader("uniformFS.glsl"));
@@ -120,7 +118,7 @@ int main(void) {
     // unbind
     GLCall(glBindVertexArray(0));
     GLCall(glUseProgram(0));
-    GLCall(glBindBuffer(GL_ARRAY_BUFFER,0));
+    GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
     GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
 
     // generate a carton
@@ -135,7 +133,7 @@ int main(void) {
         GLCall(glUniform4f(location, r, 0.3f, 0.8f, 1.0f));
 
         GLCall(glBindVertexArray(VAO));
-        GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO));
+        IBO.bind();
 
         GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
 

@@ -5,7 +5,7 @@
 #include <GL/glew.h>
 #include <iostream>
 #include <fstream>
-#include "LearnOpenGLHeader.h"
+#include <Renderer.h>
 
 void showMessage(const char *file, int line){
     std::cerr << "File " << file << " Line " << line << std::endl;
