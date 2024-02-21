@@ -111,10 +111,10 @@ int main(void) {
     GLCall(glUniform4f(location, 0.2f, 0.3f, 0.8f, 1.0f));
 
     // unbind
-    GLCall(glBindVertexArray(0));
+    VAO.unbind();
+    VBO.unbind();
+    IBO.unbind();
     GLCall(glUseProgram(0));
-    GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
-    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
 
     // generate a carton
     GLfloat r = 0.5f;
