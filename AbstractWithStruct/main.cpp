@@ -88,21 +88,16 @@ int main(void) {
             2, 3, 0, //second triangle
     };
 
-    /*
-     * A VAO contains a buffer bind to GL_ARRAY_BUFFER and its layout (which we indicate in glVertexAttribPointer)
-     */
-    GLuint VAO;
-    GLCall(glGenVertexArrays(1, &VAO));
-    GLCall(glBindVertexArray(VAO));
+
+    VertexArray VAO;
 
     VertexBuffer VBO(quadrangle, sizeof(quadrangle));
 
-    // bind VBO to VAO
-    // index 0 of the first parameter link to ABO, and bind it with VAO
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), 0);
-    glEnableVertexAttribArray(0);
-
     IndexBuffer IBO(indices, 6);
+
+    VertexBufferLayout VBLayout;
+    VBLayout.push<GLfloat>(2);
+    VAO.setLayout(VBO, VBLayout);
 
     GLuint shader = createShader(getShader("VertexShader.glsl"),
                                  getShader("uniformFS.glsl"));
@@ -132,7 +127,7 @@ int main(void) {
         GLCall(glUseProgram(shader));
         GLCall(glUniform4f(location, r, 0.3f, 0.8f, 1.0f));
 
-        GLCall(glBindVertexArray(VAO));
+        VAO.bind();
         IBO.bind();
 
         GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));

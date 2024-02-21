@@ -17,7 +17,7 @@ public:
 
     void unbind() const;
 
-    inline GLuint getCount() const { return m_Count; }
+    [[nodiscard]] inline GLuint getCount() const { return m_Count; }
 
 private:
     GLuint m_RenderID;
