@@ -5,11 +5,11 @@
 #ifndef UNIFORM_CORE_H
 #define UNIFORM_CORE_H
 
-#include <Renderer.h>
+#include <Tool.h>
 #include <VertexBuffer.h>
 #include <IndexBuffer.h>
 #include <VertexBufferLayout.h>
 #include <VertexArray.h>
-#include <Shader.h>
+#include <Renderer.h>
 
 #endif //UNIFORM_CORE_H

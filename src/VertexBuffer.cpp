@@ -1,7 +1,7 @@
 //
 // Created by jasperyang on 24-2-21.
 //
-#include <Renderer.h>
+#include <Tool.h>
 #include <VertexBuffer.h>
 
 VertexBuffer::VertexBuffer(const void *data, GLuint size) {
@@ -18,6 +18,6 @@ void VertexBuffer::bind() const {
     GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_RenderID));
 }
 
-void VertexBuffer::unbind() const{
+void VertexBuffer::unbind() const {
     GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
 }

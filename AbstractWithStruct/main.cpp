@@ -69,21 +69,20 @@ int main(void) {
     IBO.unbind();
     shader.unbind();
 
+    Renderer renderer;
+
     // generate a carton
     GLfloat r = 0.5f;
     GLfloat increment = 0.03f;
     while (!glfwWindowShouldClose(window)) {
-        glClear(GL_COLOR_BUFFER_BIT);
+        renderer.clear();
 
         // sent color
         // uniform is per draw
         shader.bind();
         shader.setUniform4f("u_Color", Eigen::Vector4f(r, 0.3f, 0.8f, 1.0f));
 
-        VAO.bind();
-        IBO.bind();
-
-        GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
+        renderer.draw(VAO, IBO, shader);
 
         // change the color
         if (r > 1.0f)

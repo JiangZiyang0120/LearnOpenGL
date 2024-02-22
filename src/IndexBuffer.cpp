@@ -1,7 +1,7 @@
 //
 // Created by jasperyang on 24-2-21.
 //
-#include <Renderer.h>
+#include <Tool.h>
 #include <IndexBuffer.h>
 
 IndexBuffer::IndexBuffer(const GLuint *data, unsigned int count) :

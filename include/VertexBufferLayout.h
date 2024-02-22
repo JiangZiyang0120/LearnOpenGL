@@ -2,12 +2,12 @@
 // Created by jasperyang on 24-2-21.
 //
 
-#ifndef UNIFORM_VERTEXBUFFERLAYOUT_H
-#define UNIFORM_VERTEXBUFFERLAYOUT_H
+#ifndef UNIFORM_VERTEX_BUFFER_LAYOUT_H
+#define UNIFORM_VERTEX_BUFFER_LAYOUT_H
 
+#include <Tool.h>
 #include <vector>
 #include <GL/glew.h>
-#include <Renderer.h>
 
 struct VertexBufferElement {
     GLuint count;
@@ -78,4 +78,4 @@ inline void VertexBufferLayout::push<GLubyte>(GLuint count) {
 }
 
 
-#endif //UNIFORM_VERTEXBUFFERLAYOUT_H
+#endif //UNIFORM_VERTEX_BUFFER_LAYOUT_H
