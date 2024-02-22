@@ -10,7 +10,6 @@
 
 #include <stb_image.h>
 
-#include <iostream>
 
 Texture::Texture(const std::string &path) :
         m_FilePath(path), m_LocalBuffer(nullptr), m_Height(0),
