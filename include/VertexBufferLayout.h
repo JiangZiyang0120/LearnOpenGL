@@ -25,6 +25,7 @@ struct VertexBufferElement {
             default:
                 ASSERT(true);
         }
+        return -1;
     }
 };
 

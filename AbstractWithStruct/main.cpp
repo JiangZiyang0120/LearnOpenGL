@@ -35,10 +35,11 @@ int main(void) {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
     GLfloat quadrangle[] = {
-            -0.5f, -0.5f,   //0
-            0.5f, -0.5f,    //1
-            0.5f, 0.5f,     //2
-            -0.5f, 0.5f,    //3
+            // x, y, texture-left, texture-right
+            -0.5f, -0.5f, 0.0f, 0.0f,   //0
+            0.5f, -0.5f, 1.0f, 0.0f,   //1
+            0.5f, 0.5f, 1.0f, 1.0f,    //2
+            -0.5f, 0.5f, 0.0f, 1.0f,   //3
     };
 
     GLuint indices[] = {
@@ -54,14 +55,20 @@ int main(void) {
     IndexBuffer IBO(indices, 6);
 
     VertexBufferLayout VBLayout;
+    // push (x,y)
+    VBLayout.push<GLfloat>(2);
+    // push texture coordinate
     VBLayout.push<GLfloat>(2);
     VAO.setLayout(VBO, VBLayout);
 
-    Shader shader("../../Shader/VertexShader.glsl",
-                  "../../Shader/uniformFS.glsl");
+    Shader shader("../../shader/vertexTextureShader.glsl",
+                  "../../shader/fragmentTextureShader.glsl");
     shader.bind();
 
-    shader.setUniform4f("u_Color", Eigen::Vector4f(0.2f, 0.3f, 0.8f, 1.0f));
+    Texture texture("../../texture/Morpho_didius_Male_Dos_MHNT.jpg");
+    texture.bind(0);
+    // value 0 of the 2nd parameter is the value of slot parameter of texture.bind()
+    shader.setUniform1i("u_Texture", 0);
 
     // unbind
     VAO.unbind();
@@ -71,26 +78,14 @@ int main(void) {
 
     Renderer renderer;
 
-    // generate a carton
-    GLfloat r = 0.5f;
-    GLfloat increment = 0.03f;
     while (!glfwWindowShouldClose(window)) {
         renderer.clear();
 
         // sent color
         // uniform is per draw
         shader.bind();
-        shader.setUniform4f("u_Color", Eigen::Vector4f(r, 0.3f, 0.8f, 1.0f));
 
         renderer.draw(VAO, IBO, shader);
-
-        // change the color
-        if (r > 1.0f)
-            increment = -0.03f;
-        else if (r < 0.0f)
-            increment = 0.03f;
-
-        r += increment;
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);

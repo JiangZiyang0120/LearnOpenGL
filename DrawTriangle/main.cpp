@@ -157,8 +157,8 @@ int main(void) {
     // Notice, glEnableVertexAttribArray can be called before glVertexAttribPointer
     glEnableVertexAttribArray(0);
 
-    GLuint shader = createShader(getShader("Shader/VertexShader.glsl"),
-                                 getShader("Shader/fragmentShader.glsl"));
+    GLuint shader = createShader(getShader("shader/VertexShader.glsl"),
+                                 getShader("shader/fragmentShader.glsl"));
     glUseProgram(shader);
 
     /* Loop until the user closes the window */

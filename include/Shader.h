@@ -23,6 +23,8 @@ public:
     // set uniforms
     void setUniform4f(const std::string &name, Eigen::Vector4f value);
 
+    void setUniform1i(const std::string &name, GLuint value);
+
 private:
     GLuint m_RenderID;
 

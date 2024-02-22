@@ -95,3 +95,9 @@ std::string Shader::parseShader(const std::string &filepath) {
         return "Error Occurred";
     }
 }
+
+void Shader::setUniform1i(const std::string &name, GLuint value) {
+    GLCall(GLint location = getUniformLocation(name));
+    ASSERT(location == -1);
+    GLCall(glUniform1i(getUniformLocation(name), value));
+}

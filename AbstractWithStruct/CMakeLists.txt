@@ -8,7 +8,7 @@ find_package(glfw3 3.3 REQUIRED)
 set(OPENGL_LIBRARY /usr/lib/x86_64-linux-gnu/libGL.so)
 set(GLEW_LIBRARY /usr/lib/x86_64-linux-gnu/libGLEW.so)
 
-include_directories(${PROJECT_SOURCE_DIR}/../include)
+include_directories(${PROJECT_SOURCE_DIR}/../include ${PROJECT_SOURCE_DIR}/../external_include)
 
 file(GLOB project_file main.cpp)
 

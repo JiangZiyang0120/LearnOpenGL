@@ -11,5 +11,6 @@
 #include <VertexBufferLayout.h>
 #include <VertexArray.h>
 #include <Renderer.h>
+#include <Texture.h>
 
 #endif //UNIFORM_CORE_H
