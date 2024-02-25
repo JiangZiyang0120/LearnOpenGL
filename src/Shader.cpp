@@ -27,7 +27,7 @@ void Shader::unbind() const {
     GLCall(glUseProgram(0));
 }
 
-void Shader::setUniform4f(const std::string &name, Eigen::Vector4f value) {
+void Shader::setUniform4f(const std::string &name, const glm::vec4 value) {
     GLCall(GLint location = getUniformLocation(name));
     // check if uniform is found
     ASSERT(location == -1);
@@ -100,4 +100,14 @@ void Shader::setUniform1i(const std::string &name, GLuint value) {
     GLCall(GLint location = getUniformLocation(name));
     ASSERT(location == -1);
     GLCall(glUniform1i(getUniformLocation(name), value));
+}
+
+void Shader::setUniformMat4f(const std::string &name, const glm::mat4 &matrix) {
+    /*
+     * GL_FALSE for the 3rd parameter is that we needn't transform the matrix as OpenGL and glm are both column major matrices.
+     *
+     * &matrix[0][0] for the 4th parameter is that, matrices in GLM are stored as float arrays, and the 4th parameter needs
+     * the array's pointer. However, GLM overrides the operator[] so that we can get its first element by using matrix[0][0].
+     */
+    GLCall(glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, &matrix[0][0]));
 }

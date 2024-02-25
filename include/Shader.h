@@ -6,9 +6,9 @@
 #define ABSTRACT_SHADER_H
 
 #include <string>
-#include <eigen3/Eigen/Core>
 #include <GL/glew.h>
 #include <unordered_map>
+#include <glm/glm.hpp>
 
 class Shader {
 public:
@@ -21,7 +21,9 @@ public:
     void unbind() const;
 
     // set uniforms
-    void setUniform4f(const std::string &name, Eigen::Vector4f value);
+    void setUniform4f(const std::string &name, const glm::vec4 value);
+
+    void setUniformMat4f(const std::string &name, const glm::mat4 &matrix);
 
     void setUniform1i(const std::string &name, GLuint value);
 

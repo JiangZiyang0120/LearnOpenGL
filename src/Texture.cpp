@@ -7,13 +7,12 @@
 #include <GL/glew.h>
 
 #define STB_IMAGE_IMPLEMENTATION
-
-#include <stb_image.h>
-
+#include <stb/stb_image.h>
 
 Texture::Texture(const std::string &path) :
         m_FilePath(path), m_LocalBuffer(nullptr), m_Height(0),
         m_Width(0), m_BPP(0), m_RenderID(0) {
+    stbi_set_flip_vertically_on_load(true);
     stbi_set_unpremultiply_on_load(1);
     m_LocalBuffer = stbi_load(path.c_str(), &m_Width, &m_Height, &m_BPP, 4);
 
